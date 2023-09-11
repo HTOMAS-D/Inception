@@ -2,32 +2,37 @@ version: '3.8'
 
 services:
   nginx:
-    depends_on:
-      - wordpress
+    # depends_on:
+    #   - wordpress
+    image: nginx_inception
     build:
-      context: ./nginx
+      context: ./requirements/nginx
+    # env_files: .env
     ports:
       - "443:443"
+    networks:
+      - ricky
+    restart: always
 
-  wordpress:
-    depends_on:
-      - mariadb  
-    build:
-      context: ./wordpress
-    env_file: .env
-    volumes:
-      - wordpress_data:/var/www/html  
+#   wordpress:
+#     depends_on:
+#       - mariadb  
+#     build:
+#       context: ./wordpress
+#     env_file: .env
+#     volumes:
+#       - wordpress_data:/var/www/html  
 
-  mariadb:
-    build:
-      context: ./mariadb
-    env_file: .env
-    volumes:
-      - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
+#   mariadb:
+#     build:
+#       context: ./mariadb
+#     env_file: .env
+#     volumes:
+#       - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
 
-volumes:
-  mariadb_data:  
-  wordpress_data:  
+# volumes:
+#   mariadb_data:  
+#   wordpress_data:  
 
 networks: #allows the containers to "talk to eachother"
   ricky:
