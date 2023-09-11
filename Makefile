@@ -14,6 +14,7 @@ god:
 	git status
 	git commit -m "🔥Random Makefile Commit🔥"
 	git status
+	git push
 
 .PHONY: all up down
 
