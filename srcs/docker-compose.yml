@@ -4,6 +4,7 @@ services:
   nginx:
     # depends_on:
     #   - wordpress
+    container_name: nginx
     image: nginx_inception
     build:
       context: ./requirements/nginx
@@ -14,21 +15,23 @@ services:
       - ricky
     restart: always
 
-#   wordpress:
+  # wordpress:
 #     depends_on:
 #       - mariadb  
-#     build:
-#       context: ./wordpress
-#     env_file: .env
+    # container_name: wordpress
+    # build:
+    #   context: ./wordpress
+    # env_file: .env
 #     volumes:
 #       - wordpress_data:/var/www/html  
 
-#   mariadb:
-#     build:
-#       context: ./mariadb
-#     env_file: .env
-#     volumes:
-#       - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
+  # mariadb:
+  #   container_name: mariadb
+  #   build:
+  #     context: ./mariadb
+  #   env_file: .env
+  #   volumes:
+  #     - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
 
 # volumes:
 #   mariadb_data:  
