@@ -1,10 +1,14 @@
 FROM debian:11
 
 RUN apt-get update && \
-    apt-get install nginx openssl libssl-dev wget -yq
+    apt-get install nginx openssl wget -yq
+
+RUN mkdir etc/nginx/ssl
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY 
+
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/privatekey.key -out /etc/ssl/certs/certificate.crt -subj "/C=PT/L=Lisboa/O=42Lisboa/OU=Student/CN=htomas-d.42.fr"
+
 
 
 # RUN: This instruction is used to execute a command within the Docker container during the image build process.
@@ -18,6 +22,6 @@ COPY
 # -y: Assumes "yes" as the answer to all prompts, allowing for a non-interactive installation.
 # -q: Suppresses output messages, making the installation quieter.
 
-EXPOSE 443
+# EXPOSE 443
 
 CMD [ "nginx", "-g", "daemon off;" ]

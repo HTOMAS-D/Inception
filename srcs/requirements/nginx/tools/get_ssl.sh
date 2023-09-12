@@ -1,1 +1,0 @@
-openssl req -x509 -days 500 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/privatekey.key -out /etc/nginx/ssl/certificate.crt

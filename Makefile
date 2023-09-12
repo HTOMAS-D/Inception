@@ -1,12 +1,18 @@
 all: up
 	
 up:
-	@echo "$(GREEN)docker compose up ongoing$(DEFAULT)"
-	@docker-compose -f srcs/docker-compose.yml up --build -d
+	# @echo "$(GREEN)docker compose up ongoing$(DEFAULT)"
+	@docker compose -f srcs/docker-compose.yml up --build -d
 
 down: 
-	@echo"$(RED)docker compose down ongoing$(DEFAULT)"
-	@docker-compose -f srcs/docker-compose.yml down
+	# echo"$(RED)docker compose down ongoing$(DEFAULT)"
+	@docker compose -f srcs/docker-compose.yml down
+
+re: down up
+
+deep_clean:
+	@docker stop $$(docker ps -qa)
+	@docker system prune -a
 
 god:
 	git status
