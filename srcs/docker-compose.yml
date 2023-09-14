@@ -25,11 +25,16 @@ services:
 #     volumes:
 #       - wordpress_data:/var/www/html  
 
-  # mariadb:
-  #   container_name: mariadb
-  #   build:
-  #     context: ./mariadb
-  #   env_file: .env
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+    ports:
+      - "3306:3306"
+    env_file: .env
+    networks:
+      - ricky
+    # restart: always
   #   volumes:
   #     - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
 
