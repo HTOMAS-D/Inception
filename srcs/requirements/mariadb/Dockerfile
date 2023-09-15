@@ -10,16 +10,8 @@ RUN apt-get update && \
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 COPY ./conf/start.sh .
+RUN chmod 744 ./start.sh
+ENTRYPOINT ./start.sh
 
-# The lines apt-get clean and rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* are typically
-# included in Dockerfiles to reduce the size of the final Docker image  by removing temporary files and cached package lists.
-
-# Expose the default MariaDB port (3306)
-# EXPOSE 3306
-# RUN service mysql start  mariadb-client
-# RUN mysql_install_db
-# Start the MariaDB service when the container starts
-# ENTRYPOINT [ "bash", "start.sh" ]
-ENTRYPOINT [ "tail", "-f", "/dev/null" ]
-
-# CMD ["mysqld", "--user=mysql", "--console"]
+# ENTRYPOINT [ "tail", "-f", "/dev/null" ]
+# CMD [ "mysqld", "--bind-address=0.0.0.0" ]

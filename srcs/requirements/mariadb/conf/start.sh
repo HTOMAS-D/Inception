@@ -1,8 +1,7 @@
 #!/bin/sh
-/etc/init.d/mysql start
 if [ -d "/var/lib/mysql/$MYSQL_DB"]
 then
-    echo "Database already exist"
+    echo "Database already there"
 else
 mysql_install_db
 service mariadb start
@@ -21,4 +20,4 @@ sleep 1
 service mariadb stop
 fi
 
-exec "$@"
+exec mysqld_safe --bind-address=0.0.0.0 #"$@"
