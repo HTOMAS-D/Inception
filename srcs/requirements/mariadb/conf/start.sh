@@ -20,4 +20,4 @@ sleep 1
 service mariadb stop
 fi
 
-exec mysqld_safe --bind-address=0.0.0.0 #"$@"
+exec mysqld_safe --bind-address=0.0.0.0

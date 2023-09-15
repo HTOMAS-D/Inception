@@ -15,15 +15,15 @@ services:
       - ricky
     restart: always
 
-  # wordpress:
-#     depends_on:
-#       - mariadb  
-    # container_name: wordpress
-    # build:
-    #   context: ./wordpress
-    # env_file: .env
-#     volumes:
-#       - wordpress_data:/var/www/html  
+  wordpress:
+    depends_on:
+      - mariadb  
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+    env_file: .env
+    # volumes:
+    #   - wordpress_data:/var/www/html  
 
   mariadb:
     container_name: mariadb
