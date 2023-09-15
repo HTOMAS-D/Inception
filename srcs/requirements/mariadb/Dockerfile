@@ -3,9 +3,11 @@ FROM debian:11
 
 # Install MariaDB and other required packages
 RUN apt-get update && \
-    apt-get install -yq mariadb-server mariadb-client && \
+    apt-get install -yq mariadb-server && \ 
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 COPY ./conf/start.sh .
 
@@ -14,8 +16,8 @@ COPY ./conf/start.sh .
 
 # Expose the default MariaDB port (3306)
 # EXPOSE 3306
-# RUN service mysql start
-RUN mysql_install_db
+# RUN service mysql start  mariadb-client
+# RUN mysql_install_db
 # Start the MariaDB service when the container starts
 # ENTRYPOINT [ "bash", "start.sh" ]
 ENTRYPOINT [ "tail", "-f", "/dev/null" ]
