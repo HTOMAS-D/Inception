@@ -1,10 +1,10 @@
 #!/bin/sh
-mysql_install_db
 /etc/init.d/mysql start
 if [ -d "/var/lib/mysql/$MYSQL_DB"]
 then
     echo "Database already exist"
 else
+mysql_install_db
 service mariadb start
 mysql_secure_installation << _EOF_
 Y
