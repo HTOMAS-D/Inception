@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   nginx:
-    # depends_on:
-    #   - wordpress
+    depends_on:
+      - wordpress
     container_name: nginx
     image: nginx_inception
     build:

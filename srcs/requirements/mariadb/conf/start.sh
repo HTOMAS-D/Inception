@@ -1,23 +1,31 @@
-#!/bin/sh
-if [ -d "/var/lib/mysql/$MYSQL_DB"]
-then
-    echo "Database already there"
+if [ -d "/var/lib/mysql/$DB_NAME" ]
+then 
+	echo "Database already exists"
 else
 mysql_install_db
-service mariadb start
-mysql_secure_installation << _EOF_
+
+service mysql start
+# Set root option so that connexion without root password is not possible
+
+mysql_secure_installation <<_EOF_
+
 Y
-$MYSQL_ROOT_PASS
-$MYSQL_ROOT_PASS
+$DB_ROOT_PASSWORD
+$DB_ROOT_PASSWORD
 Y
 n
 Y
 Y
 _EOF_
-echo "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASS'; FLUSH PRIVILEGES;" | mysql -uroot
-echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DB; GRANT ALL ON $MYSQL_DB.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PASS'; FLUSH PRIVILEGES;" | mysql -uroot
+
+
+
+#Create database and user for wordpress
+echo "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';" | mysql -uroot -p$DB_ROOT_PASSWORD
+echo "CREATE DATABASE IF NOT EXISTS $DB_NAME; GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; FLUSH PRIVILEGES;" | mysql -uroot -p$DB_ROOT_PASSWORD
+
 sleep 1
-service mariadb stop
+service mysql stop
 fi
 
 exec mysqld_safe --bind-address=0.0.0.0
