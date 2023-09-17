@@ -2,7 +2,7 @@ all: up
 	
 up:
 	@echo "$(GREEN)Docker compose UP ongoing 🏗️$(DEFAULT)"
-	@docker compose -f srcs/docker-compose.yml up --build #-d
+	@docker compose -f srcs/docker-compose.yml up --build -d
 
 down: 
 	@echo "$(RED)Docker compose DOWN ongoing 💥$(DEFAULT)"

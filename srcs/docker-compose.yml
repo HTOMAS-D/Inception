@@ -17,7 +17,8 @@ services:
 
   wordpress:
     depends_on:
-      - mariadb  
+      mariadb:
+        condition: service_healthy
     container_name: wordpress
     build:
       context: ./requirements/wordpress
@@ -36,6 +37,12 @@ services:
     env_file: .env
     networks:
       - ricky
+    healthcheck:
+      interval: 5s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
     # restart: always
   #   volumes:
   #     - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
