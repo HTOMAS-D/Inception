@@ -9,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ./conf/setup.sh .
-RUN bash setup.sh
+# RUN bash setup.sh
 WORKDIR /var/www/html
 # COPY 
 # RUN 

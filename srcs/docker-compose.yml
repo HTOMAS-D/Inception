@@ -25,6 +25,8 @@ services:
     env_file: .env
     networks:
       - ricky
+    ports:
+    - "9000:9000"
     # volumes:
     #   - wordpress_data:/var/www/html  
 
