@@ -1,5 +1,5 @@
 # Use the official Debian base image
-FROM debian:11
+FROM debian:buster
 
 # Install MariaDB and other required packages
 RUN apt-get update && \

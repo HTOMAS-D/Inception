@@ -8,7 +8,6 @@ services:
     image: nginx_inception
     build:
       context: ./requirements/nginx
-    # env_files: .env
     ports:
       - "443:443"
     networks:
@@ -27,8 +26,8 @@ services:
       - ricky
     ports:
     - "9000:9000"
-    # volumes:
-    #   - wordpress_data:/var/www/html  
+    volumes:
+      - ./requirements/wordpress/data:/var/www/html  
 
   mariadb:
     container_name: mariadb
@@ -45,13 +44,23 @@ services:
       retries: 10
       start_period: 5s
       test: ["CMD", "mysqladmin", "ping", "--silent"]
-    # restart: always
-  #   volumes:
-  #     - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
+    restart: always
+    volumes:
+      - ./requirements/mariadb/data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
 
-# volumes:
-#   mariadb_data:  
-#   wordpress_data:  
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: "${MARIADB_VOL}"
+      o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: "${WORDPRESS_VOL}"
+      o: bind
 
 networks: #allows the containers to "talk to eachother"
   ricky:

@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:buster
 
 
 # RUN: This instruction is used to execute a command within the Docker container during the image build process.

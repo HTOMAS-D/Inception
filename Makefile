@@ -1,8 +1,18 @@
+WP_DIR = ./srcs/requirements/wordpress/data
+MARIADB_DIR = ./srcs/requirements/mariadb/data
+
+
 all: up
-	
-up:
+
+$(WP_DIR):
+	@mkdir -p $@
+
+$(MARIADB_DIR):
+	@mkdir -p $@
+
+up: $(MARIADB_DIR) $(WP_DIR)
 	@echo "$(GREEN)Docker compose UP ongoing 🏗️$(DEFAULT)"
-	@docker compose -f srcs/docker-compose.yml up --build -d
+	@docker compose -f srcs/docker-compose.yml up --build #-d
 
 down: 
 	@echo "$(RED)Docker compose DOWN ongoing 💥$(DEFAULT)"
