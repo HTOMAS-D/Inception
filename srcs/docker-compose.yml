@@ -27,7 +27,7 @@ services:
     ports:
     - "9000:9000"
     volumes:
-      - ./requirements/wordpress/data/:/var/www/html  
+      - wordpress_data:/var/www/html  
 
   mariadb:
     container_name: mariadb

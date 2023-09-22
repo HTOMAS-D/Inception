@@ -17,8 +17,8 @@ up: $(MARIADB_DIR) $(WP_DIR)
 down: 
 	@echo "$(RED)Docker compose DOWN ongoing 💥$(DEFAULT)"
 	@docker compose -f srcs/docker-compose.yml down
-	rm -rf requirements/mariadb/data/
-	rm -rf requirements/wordpress/data/
+	@rm -rf requirements/mariadb/data/
+	@rm -rf requirements/wordpress/data/
 
 re: down up
 
@@ -36,6 +36,28 @@ god:
 	git commit -m "🔥Random Makefile Commit🔥"
 	git status
 	git push
+
+purge: deep_clean
+	@clear
+	@-if [ $$(docker ps -q | wc -l) -gt 0 ]; then \
+		docker stop $$(docker ps -q); \
+		echo " All containers $(YELLOW)stopped!"; \
+	fi
+	-@docker system prune --all --force
+	@-if [ $$(docker ps -a -q | wc -l) -gt 0 ]; then \
+		docker rm $$(docker ps -a -q); \
+	fi
+	@echo " All containers $(YELLOW)removed!"
+	@-if [ $$(docker images -q | wc -l) -gt 0 ]; then \
+		docker rmi $$(docker images -q); \
+	fi
+	@echo " All images $(YELLOW)removed!"
+	@docker volume prune --force
+	@echo " All volumes $(YELLOW)removed!"
+	@docker network prune --force
+	@echo " All networks $(YELLOW)removed!"
+	@docker builder prune --force
+	@echo " All builders $(YELLOW)removed!"
 
 .PHONY: all up down
 
