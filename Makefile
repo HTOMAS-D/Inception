@@ -17,8 +17,8 @@ up: $(MARIADB_DIR) $(WP_DIR)
 down: 
 	@echo "$(RED)Docker compose DOWN ongoing 💥$(DEFAULT)"
 	@docker compose -f srcs/docker-compose.yml down
-	@rm -rf $(WP_DIR)
-	@rm -rf $(MARIADB_DIR)
+	rm -rf requirements/mariadb/data/
+	rm -rf requirements/wordpress/data/
 
 re: down up
 
