@@ -27,14 +27,14 @@ services:
     ports:
     - "9000:9000"
     volumes:
-      - ./requirements/wordpress/data:/var/www/html  
+      - ./requirements/wordpress/data/:/var/www/html  
 
   mariadb:
     container_name: mariadb
     build:
       context: ./requirements/mariadb
-    ports:
-      - "3306:3306"
+    expose:
+      - 3306
     env_file: .env
     networks:
       - ricky
@@ -46,7 +46,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
     restart: always
     volumes:
-      - ./requirements/mariadb/data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
+      - mariadb_data:/var/lib/mysql #mariadb is a fork of mysql so theres compatibility
 
 volumes:
   mariadb_data:

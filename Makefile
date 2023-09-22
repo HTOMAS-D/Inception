@@ -12,17 +12,22 @@ $(MARIADB_DIR):
 
 up: $(MARIADB_DIR) $(WP_DIR)
 	@echo "$(GREEN)Docker compose UP ongoing 🏗️$(DEFAULT)"
-	@docker compose -f srcs/docker-compose.yml up --build #-d
+	@docker compose -f srcs/docker-compose.yml up --build -d
 
 down: 
 	@echo "$(RED)Docker compose DOWN ongoing 💥$(DEFAULT)"
 	@docker compose -f srcs/docker-compose.yml down
+	@rm -rf $(WP_DIR)
+	@rm -rf $(MARIADB_DIR)
 
 re: down up
 
 deep_clean:
 	@docker stop $$(docker ps -qa)
 	@docker system prune -a
+	@rm -rf $(MARIADB_DIR)
+	@rm -rf $(WP_DIR)
+
 
 god:
 	git status
