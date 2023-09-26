@@ -1,16 +1,6 @@
 # Use the official Debian base image
 FROM debian:buster
 
-# Install MariaDB and other required packages
-# installing coreutils for testing (tail -f)
-# RUN apt-get update && \
-#     apt-get clean && \
-#     apt-get -y install curl && \
-#     apt-get -y install vim && \
-#     apt-get -y install coreutils && \ 
-# 	apt-get -y install php-cli php-mysql && \
-#     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
-
 RUN apt-get update && apt-get -y install \
 	wget \
 	curl \
@@ -45,5 +35,7 @@ RUN chmod +x /usr/local/bin/setup.sh
 COPY ./conf/entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
+WORKDIR /var/www/html/
+
 # Use the custom entrypoint script to execute the setup.sh script and keep the container running
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

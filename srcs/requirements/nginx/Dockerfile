@@ -20,7 +20,7 @@ RUN apt-get update && \
     mkdir /etc/nginx/ssl
 
 # Copy Nginx configuration
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/sites-available/default
 
 # Generate SSL certificate
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/privatekey.key -out /etc/ssl/certs/certificate.crt -subj "/C=PT/L=Lisboa/O=42Lisboa/OU=Student/CN=htomas-d.42.fr"
