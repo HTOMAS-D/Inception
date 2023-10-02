@@ -1,5 +1,5 @@
-WP_DIR = ./srcs/requirements/wordpress/data
-MARIADB_DIR = ./srcs/requirements/mariadb/data
+WP_DIR = /home/htomas-d/data/wordpress
+MARIADB_DIR = /home/htomas-d/data/mariadb
 
 
 all: up
@@ -17,16 +17,18 @@ up: $(MARIADB_DIR) $(WP_DIR)
 down: 
 	@echo "$(RED)Docker compose DOWN ongoing 💥$(DEFAULT)"
 	@docker compose -f srcs/docker-compose.yml down
-	@rm -rf requirements/mariadb/data/
-	@rm -rf requirements/wordpress/data/
 
 re: down up
 
 deep_clean:
-	@docker stop $$(docker ps -qa)
-	@docker system prune -a
 	@rm -rf $(MARIADB_DIR)
 	@rm -rf $(WP_DIR)
+	docker stop $(shell docker ps -qa)
+	docker rm $(shell docker ps -qa)
+	docker rmi -f $(shell docker images -qa)
+	docker volume rm $(shell docker volume ls -q)
+	docker network rm $(shell docker network ls -q)
+	@docker system prune -a
 
 
 god:

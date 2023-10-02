@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   nginx:
+    image: nginx
     depends_on:
       - wordpress
     container_name: nginx
-    image: nginx_inception
     build:
       context: ./requirements/nginx
     ports:
@@ -17,6 +17,7 @@ services:
       - wordpress_data:/var/www/html  
 
   wordpress:
+    image: wordpress
     depends_on:
       mariadb:
         condition: service_healthy
@@ -26,14 +27,14 @@ services:
     env_file: .env
     networks:
       - ricky
-    # ports:
-    # - "9000:9000"
     expose:
       - 9000
+    restart: always
     volumes:
       - wordpress_data:/var/www/html  
 
   mariadb:
+    image: mariadb
     container_name: mariadb
     build:
       context: ./requirements/mariadb
